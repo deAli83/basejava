@@ -1,11 +1,20 @@
 package ru.javawebinar.basejava;
 
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.ArrayStorage;
+import ru.javawebinar.basejava.storage.Storage;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * Interactive test for com.unrise.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
-/*public class MainArray {
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+
+public class MainArray {
+    private final static Storage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
