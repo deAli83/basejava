@@ -1,12 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+package com.unrise.webapp;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for com.unrise.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
-public class MainArray {
+/*public class MainArray {
     private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
@@ -68,4 +66,4 @@ public class MainArray {
         }
         System.out.println("----------------------------");
     }
-}
+}*/
