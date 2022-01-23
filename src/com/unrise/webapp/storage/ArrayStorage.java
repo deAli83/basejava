@@ -17,13 +17,14 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (checkUuid(resume.getUuid()) != -1) {
-            storage[checkUuid(resume.getUuid())] = resume;
+        int i = findIndex(resume.getUuid());
+        if (i != -1) {
+            storage[i] = resume;
         }
     }
 
     public void save(Resume r) {
-        if (size < 9999 && checkUuid(r.getUuid()) == -1) {
+        if (size < storage.length && findIndex(r.getUuid()) == -1) {
             storage[size] = r;
             size++;
             return;
@@ -32,15 +33,17 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (checkUuid(uuid) != -1) {
-            return storage[checkUuid(uuid)];
+        int i = findIndex(uuid);
+        if (i != -1) {
+            return storage[i];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (checkUuid(uuid) != -1) {
-            storage[checkUuid(uuid)] = storage[size - 1];
+        int i = findIndex(uuid);
+        if (i != -1) {
+            storage[i] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
@@ -57,13 +60,13 @@ public class ArrayStorage {
         return size;
     }
 
-    private int checkUuid(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
-        System.out.println("Resume is absent");
+        System.out.println("Resume " + uuid + " is absent");
         return -1;
     }
 }
