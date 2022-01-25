@@ -1,4 +1,4 @@
-package com.unrise.webapp;
+package ru.javawebinar.basejava;
 
 /**
  * Interactive test for com.unrise.webapp.storage.ArrayStorage implementation

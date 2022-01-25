@@ -1,6 +1,6 @@
-package com.unrise.webapp.storage;
+package ru.javawebinar.basejava.storage;
 
-import com.unrise.webapp.model.Resume;
+import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
