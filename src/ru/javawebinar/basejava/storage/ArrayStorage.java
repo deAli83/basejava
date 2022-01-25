@@ -2,65 +2,61 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
-/**
- * Array based storage for Resumes
- */
-
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    @Override
+    public void update(Resume r) {
+        String uuid = r.getUuid();
+        int index = getIndex(uuid);
         if (index != -1) {
-            storage[index] = resume;
+            storage[index] = r;
+        } else {
+            System.out.println("Resume " + uuid + " not exist");
         }
     }
 
+    @Override
     public void save(Resume r) {
         if (getIndex(r.getUuid()) != -1) {
             System.out.println("Resume " + r.getUuid() + " already exist");
+            return;
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow");
+            return;
         } else {
             storage[size] = r;
             size++;
-            return;
         }
-        System.out.println("Array is full");
     }
 
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index != -1) {
             size--;
             storage[index] = storage[size];
             storage[size] = null;
+        } else {
+            System.out.println("Resume " + uuid + " not exist");
         }
     }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-
+    @Override
+    public Resume get(String uuid) {
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Resume " + uuid + " not exist");
+            return null;
+        }
+        return storage[index];
     }
 
+    @Override
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                System.out.println("Resume " + uuid + " find in storage");
                 return i;
             }
         }
-        System.out.println("Resume " + uuid + " is absent");
         return -1;
     }
 }
