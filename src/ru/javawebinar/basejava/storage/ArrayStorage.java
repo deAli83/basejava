@@ -10,24 +10,9 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index != -1) {
-            size--;
-            storage[index] = storage[size];
-            storage[size] = null;
-        } else {
-            System.out.println("Resume " + uuid + " not exist");
-        }
-    }
-    @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index == -1) {
-            System.out.println("Resume " + uuid + " not exist");
-            return null;
-        }
-        return storage[index];
+    protected void deleteResume(int index) {
+        storage[index] = storage[size];
+        storage[size] = null;
     }
 
     @Override

@@ -8,47 +8,30 @@ public class SortedArrayStorage extends AbstractArrayStorage{
 
     @Override
     public void add(Resume r) {
-        int shift = size - (Math.abs(getIndex(r.getUuid())) + 1);
+        int shift = size + 1 - Math.abs(getIndex(r.getUuid()));
             if (shift == 0) {
                 storage[size] = r;
             } else {
-                for (int i = 1; i <= shift; i++) {
-                    storage[size] = storage[size - i];
+                for (int i = 0; i < shift; i++) {
+                    storage[size - i] = storage[size - (i + 1)];
                 }
                 storage[size - shift] = r;
             }
         }
 
     @Override
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            size--;
-            int shift = size - index;
-            for (int i = 0; i < shift; i++) {
-                storage[index + i] = storage[index + (i + 1)];
-            }
-            storage[size] = null;
-        } else {
-            System.out.println("Resume " + uuid + " not exist");
+    protected void deleteResume(int index) {
+        int shift = size - index;
+        for (int i = 0; i < shift; i++) {
+            storage[index + i] = storage[index + (i + 1)];
         }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " not exist");
-            return null;
-        }
-        return storage[index];
+        storage[size] = null;
     }
 
     @Override
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
-        System.out.println(uuid + Arrays.binarySearch(storage, 0, size, searchKey));
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }
