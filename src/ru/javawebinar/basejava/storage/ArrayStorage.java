@@ -5,28 +5,8 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void update(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
-        if (index != -1) {
-            storage[index] = r;
-        } else {
-            System.out.println("Resume " + uuid + " not exist");
-        }
-    }
-
-    @Override
-    public void save(Resume r) {
-        if (getIndex(r.getUuid()) != -1) {
-            System.out.println("Resume " + r.getUuid() + " already exist");
-            return;
-        } else if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
-            return;
-        } else {
-            storage[size] = r;
-            size++;
-        }
+    protected void add(Resume r) {
+        storage[size] = r;
     }
 
     @Override
