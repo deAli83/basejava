@@ -20,7 +20,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOfRange(storage, size);
     }
 
     public Resume get(String uuid) {
