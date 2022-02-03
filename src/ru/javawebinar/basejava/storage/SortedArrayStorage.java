@@ -4,7 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public class SortedArrayStorage extends AbstractArrayStorage{
+public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void add(Resume r, int index) {
@@ -12,7 +12,7 @@ public class SortedArrayStorage extends AbstractArrayStorage{
         int shift = size - index;
         System.arraycopy(storage, index, storage, index + 1, shift);
         storage[index] = r;
-        }
+    }
 
     @Override
     protected void deleteResume(int index) {

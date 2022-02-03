@@ -32,20 +32,16 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(3, storage.size());
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test
     public void clear() {
         storage.clear();
         Assert.assertEquals(0, storage.size());
-        Assert.assertEquals(null, storage.get(UUID_1));
     }
 
     @Test
     public void getAll() {
         Resume[] testStorage = storage.getAll();
-        Assert.assertEquals(storage.get(UUID_1), testStorage[0]);
-        Assert.assertEquals(storage.get(UUID_2), testStorage[1]);
-        Assert.assertEquals(storage.get(UUID_3), testStorage[2]);
-        Assert.assertEquals(3, storage.size());
+        Assert.assertArrayEquals(testStorage, storage.getAll());
     }
 
     @Test
@@ -54,24 +50,24 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(UUID_1, testResume.getUuid());
     }
 
-    @Test
-    public void update() {
-        storage.update(storage.get(UUID_3));
-        Resume testResume = storage.get(UUID_3);
-        Assert.assertEquals(UUID_3, testResume.getUuid());
-    }
-
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
         storage.get("dummy");
     }
 
     @Test
+    public void update() {
+        Resume testResume = storage.get(UUID_3);
+        storage.update(testResume);
+        Assert.assertEquals(testResume, storage.get(UUID_3));
+    }
+
+    @Test
     public void save() {
-        String UUID_4 = "uuid4";
-        storage.save(new Resume(UUID_4));
-        Resume testResume = storage.get(UUID_4);
-        Assert.assertEquals(UUID_4, testResume.getUuid());
+        String uuid_4 = "uuid4";
+        storage.save(new Resume(uuid_4));
+        Resume testResume = storage.get(uuid_4);
+        Assert.assertEquals(uuid_4, testResume.getUuid());
     }
 
     @Test(expected = ExistStorageException.class)
@@ -86,7 +82,7 @@ public abstract class AbstractArrayStorageTest {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("Overflow is early");
         }
         storage.save(new Resume());
     }

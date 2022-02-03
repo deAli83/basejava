@@ -27,8 +27,8 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + ARRAY_STORAGE.size());
         ARRAY_STORAGE.update(r2);
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-        ARRAY_STORAGE.update(r4);
+        //System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        //ARRAY_STORAGE.update(r4);
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
@@ -48,8 +48,8 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + SORT_ARRAY_STORAGE.size());
         SORT_ARRAY_STORAGE.update(r2);
 
-        System.out.println("Get dummy: " + SORT_ARRAY_STORAGE.get("dummy"));
-        SORT_ARRAY_STORAGE.update(r4);
+        //System.out.println("Get dummy: " + SORT_ARRAY_STORAGE.get("dummy"));
+        //SORT_ARRAY_STORAGE.update(r4);
 
         printAll();
         SORT_ARRAY_STORAGE.delete(r1.getUuid());
