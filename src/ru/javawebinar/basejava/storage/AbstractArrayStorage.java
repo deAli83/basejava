@@ -1,66 +1,53 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public int size() {
+    @Override
+    final public int size() {
         return size;
     }
 
-    public void clear() {
+    @Override
+    final public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public Resume[] getAll() {
+    @Override
+    final public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    @Override
+    final protected Resume getResume(int index) {
         return storage[index];
     }
 
-    final public void update(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    @Override
+    final public void updateResume(Resume r, int index) {
         storage[index] = r;
     }
 
-    final public void save(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
+    @Override
+    final public void addResume(Resume r, int index) {
         if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", uuid);
+            throw new StorageException("Storage overflow", r.getUuid());
         }
         size++;
         add(r, index);
     }
 
-    final public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    @Override
+    final public void removeResume(String uuid, int index) {
         size--;
         deleteResume(index);
         storage[size] = null;
