@@ -42,11 +42,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     final public void addResume(Resume r) {
         String uuid = r.getUuid();
+        int index = getIndex(uuid);
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", uuid);
         }
         size++;
-        add(r);
+        add(r, index);
     }
 
     @Override
@@ -74,7 +75,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void add(Resume r);
+    protected abstract void add(Resume r, int index);
 
     protected abstract void deleteResume(int index);
 }
