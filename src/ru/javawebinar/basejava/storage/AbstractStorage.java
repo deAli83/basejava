@@ -1,60 +1,40 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
     final public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return getResume(index);
+        checkExistIndex(uuid);
+        return getResume(uuid);
     }
 
     final public void update(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        updateResume(r, index);
+        checkExistIndex(r.getUuid());
+        updateResume(r);
     }
 
     final public void save(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
-        addResume(r, index);
+        checkNoExistIndex(r.getUuid());
+        addResume(r);
     }
 
     final public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        removeResume(uuid, index);
+        checkExistIndex(uuid);
+        removeResume(uuid);
     }
 
-    public abstract int size();
+    protected abstract void checkExistIndex(String uuid);
 
-    public abstract void clear();
+    protected abstract void checkNoExistIndex(String uuid);
 
-    public abstract Resume[] getAll();
+    protected abstract Resume getResume(String uuid);
 
-    protected abstract int getIndex(String uuid);
+    protected abstract void updateResume(Resume r);
 
-    protected abstract Resume getResume(int index);
+    protected abstract void addResume(Resume r);
 
-    protected abstract void updateResume(Resume r, int index);
-
-    protected abstract void addResume(Resume r, int index);
-
-    protected abstract void removeResume(String uuid, int index);
+    protected abstract void removeResume(String uuid);
 
 }
 

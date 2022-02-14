@@ -85,4 +85,15 @@ public abstract class AbstractArrayStorageTest {
         }
         storage.save(new Resume());
     }
+
+    @Test
+    public void delete() {
+        storage.delete(UUID_1);
+        Assert.assertEquals(2, storage.size());
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void deleteNotExist() {
+        storage.delete("dummy");
+    }
 }

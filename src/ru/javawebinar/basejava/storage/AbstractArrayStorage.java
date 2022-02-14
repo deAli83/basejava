@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -28,34 +30,51 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    final protected Resume getResume(int index) {
-        return storage[index];
+    final protected Resume getResume(String uuid) {
+        return storage[getIndex(uuid)];
     }
 
     @Override
-    final public void updateResume(Resume r, int index) {
-        storage[index] = r;
+    final public void updateResume(Resume r) {
+        storage[getIndex(r.getUuid())] = r;
     }
 
     @Override
-    final public void addResume(Resume r, int index) {
+    final public void addResume(Resume r) {
+        String uuid = r.getUuid();
         if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", r.getUuid());
+            throw new StorageException("Storage overflow", uuid);
         }
         size++;
-        add(r, index);
+        add(r);
     }
 
     @Override
-    final public void removeResume(String uuid, int index) {
+    final public void removeResume(String uuid) {
         size--;
-        deleteResume(index);
+        deleteResume(getIndex(uuid));
         storage[size] = null;
+    }
+
+    @Override
+    final protected void checkExistIndex(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        }
+    }
+
+    @Override
+    final protected void checkNoExistIndex(String uuid) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            throw new ExistStorageException(uuid);
+        }
     }
 
     protected abstract int getIndex(String uuid);
 
-    protected abstract void add(Resume r, int index);
+    protected abstract void add(Resume r);
 
     protected abstract void deleteResume(int index);
 }

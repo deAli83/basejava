@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void add(Resume r, int index) {
+    protected void add(Resume r) {
         storage[size - 1] = r;
     }
 
