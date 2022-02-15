@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
@@ -26,47 +24,31 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(String uuid) {
-        return storage.get(getIndex(uuid));
+    protected Resume getResume(Object index) {
+        return storage.get((Integer) index);
     }
 
     @Override
-    protected void updateResume(Resume r) {
-        storage.set(getIndex(r.getUuid()), r);
+    protected void updateResume(Resume r, Object index) {
+        storage.set((Integer) index, r);
     }
 
     @Override
-    protected void addResume(Resume r) {
+    protected void addResume(Resume r, Object index) {
         storage.add(r);
     }
 
     @Override
-    protected void removeResume(String uuid) {
-        storage.remove(getIndex(uuid));
+    protected void removeResume(Object index) {
+        storage.remove(getResume(index));
     }
 
-    protected int getIndex(String uuid) {
-        for (Resume r : storage) {
-            if (uuid.equals(r.getUuid())) {
-                return storage.indexOf(r);
-            }
-        }
-        return -1;
+    protected Object getIndex(String uuid) {
+        return storage.indexOf(new Resume(uuid));
     }
 
     @Override
-    final protected void checkExistIndex(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    @Override
-    final protected void checkNoExistIndex(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
+    final protected boolean checkExistCondition(Object index) {
+        return ((Integer) index) < 0;
     }
 }

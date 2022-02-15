@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.HashMap;
@@ -26,36 +24,32 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getResume(String uuid) {
-        return storage.get(uuid);
+    protected Resume getResume(Object index) {
+        return storage.get((String) index);
     }
 
     @Override
-    public void updateResume(Resume r) {
-        storage.put(r.getUuid(), r);
+    public void updateResume(Resume r, Object index) {
+        storage.put((String) index, r);
     }
 
     @Override
-    protected void addResume(Resume r) {
-        storage.put(r.getUuid(), r);
+    protected void addResume(Resume r, Object index) {
+        storage.put((String) index, r);
     }
 
     @Override
-    protected void removeResume(String uuid) {
-        storage.remove(uuid);
+    protected void removeResume(Object index) {
+        storage.remove((String) index);
     }
 
     @Override
-    final protected void checkExistIndex(String uuid) {
-        if (!storage.containsKey(uuid)) {
-            throw new NotExistStorageException(uuid);
-        }
+    final protected boolean checkExistCondition(Object index) {
+        return !storage.containsKey((String) index);
     }
 
     @Override
-    final protected void checkNoExistIndex(String uuid) {
-        if (storage.containsKey(uuid)) {
-            throw new ExistStorageException(uuid);
-        }
+    final protected Object getIndex(String uuid) {
+        return uuid;
     }
 }

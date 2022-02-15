@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -30,50 +28,37 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    final protected Resume getResume(String uuid) {
-        return storage[getIndex(uuid)];
+    final protected Resume getResume(Object index) {
+        return storage[(Integer) index];
     }
 
     @Override
-    final public void updateResume(Resume r) {
-        storage[getIndex(r.getUuid())] = r;
+    final public void updateResume(Resume r, Object index) {
+        storage[(Integer) index] = r;
     }
 
     @Override
-    final public void addResume(Resume r) {
-        String uuid = r.getUuid();
-        int index = getIndex(uuid);
+    final public void addResume(Resume r, Object index) {
         if (size == STORAGE_LIMIT) {
-            throw new StorageException("Storage overflow", uuid);
+            throw new StorageException("Storage overflow", r.getUuid());
         }
         size++;
-        add(r, index);
+        add(r, (Integer) index);
     }
 
     @Override
-    final public void removeResume(String uuid) {
+    final public void removeResume(Object index) {
         size--;
-        deleteResume(getIndex(uuid));
+        deleteResume((Integer) index);
         storage[size] = null;
     }
 
     @Override
-    final protected void checkExistIndex(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
+    final protected boolean checkExistCondition(Object index) {
+        return ((Integer) index) < 0;
     }
 
-    @Override
-    final protected void checkNoExistIndex(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        }
-    }
-
-    protected abstract int getIndex(String uuid);
+    protected abstract Object getIndex(String uuid);
 
     protected abstract void add(Resume r, int index);
 
