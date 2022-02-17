@@ -7,54 +7,48 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     final public Resume get(String uuid) {
-        Object index = getIndex(uuid);
-        checkExistIndex(index, uuid);
-        return getResume(index);
+        return getResume(checkExistResume(uuid));
     }
 
     final public void update(Resume r) {
-        String uuid = r.getUuid();
-        Object index = getIndex(r.getUuid());
-        checkExistIndex(index, uuid);
-        updateResume(r, index);
+        updateResume(r, checkExistResume(r.getUuid()));
     }
 
     final public void save(Resume r) {
-        String uuid = r.getUuid();
-        Object index = getIndex(r.getUuid());
-        checkNoExistIndex(index, uuid);
-        addResume(r, index);
+        addResume(r, checkNoExistResume(r.getUuid()));
     }
 
     final public void delete(String uuid) {
-        Object index = getIndex(uuid);
-        checkExistIndex(index, uuid);
-        removeResume(index);
+        removeResume(checkExistResume(uuid));
     }
 
-    final protected void checkExistIndex(Object index, String uuid) {
-        if (checkExistCondition(index)) {
+    final protected Object checkExistResume(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
+        return searchKey;
     }
 
-    final protected void checkNoExistIndex(Object index, String uuid) {
-        if (!checkExistCondition(index)) {
+    final protected Object checkNoExistResume(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
+        return searchKey;
     }
 
-    protected abstract boolean checkExistCondition(Object index);
+    protected abstract boolean isExist(Object searchKey);
 
-    protected abstract Object getIndex(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
-    protected abstract Resume getResume(Object index);
+    protected abstract Resume getResume(Object searchKey);
 
-    protected abstract void updateResume(Resume r, Object index);
+    protected abstract void updateResume(Resume r, Object searchKey);
 
-    protected abstract void addResume(Resume r, Object index);
+    protected abstract void addResume(Resume r, Object searchKey);
 
-    protected abstract void removeResume(Object index);
+    protected abstract void removeResume(Object searchKey);
 
 }
 
