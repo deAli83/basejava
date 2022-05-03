@@ -10,22 +10,22 @@ import java.util.List;
 public abstract class AbstractStorage implements Storage {
 
     final public Resume get(String uuid) {
-        return getResume(checkExistResume(uuid));
+        return getResume(findExistedSearchKey(uuid));
     }
 
     final public void update(Resume r) {
-        updateResume(r, checkExistResume(r.getUuid()));
+        updateResume(r, findExistedSearchKey(r.getUuid()));
     }
 
     final public void save(Resume r) {
-        addResume(r, checkNoExistResume(r.getUuid()));
+        addResume(r, findNotExistedSearchKey(r.getUuid()));
     }
 
     final public void delete(String uuid) {
-        removeResume(checkExistResume(uuid));
+        removeResume(findExistedSearchKey(uuid));
     }
 
-    final protected Object checkExistResume(String uuid) {
+    final private Object findExistedSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
@@ -33,7 +33,7 @@ public abstract class AbstractStorage implements Storage {
         return searchKey;
     }
 
-    final protected Object checkNoExistResume(String uuid) {
+    final private Object findNotExistedSearchKey(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new ExistStorageException(uuid);
