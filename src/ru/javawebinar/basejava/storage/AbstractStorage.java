@@ -7,7 +7,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
     final public Resume get(String uuid) {
         return getResume(findExistedSearchKey(uuid));
@@ -25,16 +25,16 @@ public abstract class AbstractStorage implements Storage {
         removeResume(findExistedSearchKey(uuid));
     }
 
-    final private Object findExistedSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    final private SK findExistedSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    final private Object findNotExistedSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    final private SK findNotExistedSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
@@ -48,17 +48,17 @@ public abstract class AbstractStorage implements Storage {
         return resumeList;
     }
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract boolean isExist(SK searchKey);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    protected abstract Resume getResume(Object searchKey);
+    protected abstract Resume getResume(SK searchKey);
 
-    protected abstract void updateResume(Resume r, Object searchKey);
+    protected abstract void updateResume(Resume r, SK searchKey);
 
-    protected abstract void addResume(Resume r, Object searchKey);
+    protected abstract void addResume(Resume r, SK searchKey);
 
-    protected abstract void removeResume(Object searchKey);
+    protected abstract void removeResume(SK searchKey);
 
     protected abstract List<Resume> getAll();
 
