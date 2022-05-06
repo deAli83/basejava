@@ -9,8 +9,8 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.Assert.assertSame;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -52,7 +52,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void get() {
         Resume testResume = storage.get(UUID_1);
-        assertSame(testResume, storage.get(UUID_1));
+        assertEquals(testResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
