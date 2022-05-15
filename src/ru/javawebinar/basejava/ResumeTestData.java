@@ -2,8 +2,10 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -82,22 +84,25 @@ public class ResumeTestData {
                 "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, " +
                 "функционального программирования", "Родной русский, английский \"upper intermediate\""};
 
-        Skill skillExperience1 = new Skill(
-                "10/2013 - Сейчас",
+        Experience experienceJob1 = new Experience(
+                LocalDate.of(2013,10,1),
+                LocalDate.now(),
                 "Java Online Projects",
                 "Автор проекта.",
                 "Создание, организация и проведение Java онлайн проектов и стажировок.");
 
-        Skill skillExperience2 = new Skill(
-                "10/2014 - 01/2016",
+        Experience experienceJob2 = new Experience(
+                LocalDate.of(2014,10,1),
+                LocalDate.of(2016,1,1),
                 "Wrike",
                 "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, " +
                 "pring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, " +
                 "авторизация по OAuth1, OAuth2, JWT SSO.");
 
-        Skill skillExperience3 = new Skill(
-                "04/2012 - 10/2014",
+        Experience experienceJob3 = new Experience(
+                LocalDate.of(2012,4,1),
+                LocalDate.of(2014,10,1),
                 "RIT Center",
                 "Java архитектор",
                 "Организация процесса разработки системы ERP для разных окружений: релизная политика, " +
@@ -108,8 +113,9 @@ public class ResumeTestData {
                 "Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, " +
                 "OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
 
-        Skill skillExperience4 = new Skill(
-                "12/2010 - 04/2012",
+        Experience experienceJob4 = new Experience(
+                LocalDate.of(2010,12,1),
+                LocalDate.of(2012,4,1),
                 "Luxoft (Deutsche Bank)",
                 "Ведущий программист",
                 "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper," +
@@ -117,92 +123,103 @@ public class ResumeTestData {
                 " мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT," +
                 " ExtGWT (GXT), Highstock, Commet, HTML5.");
 
-        Skill skillExperience5 = new Skill(
-                "06/2008 - 12/2010",
+        Experience experienceJob5 = new Experience(
+                LocalDate.of(2008,6,1),
+                LocalDate.of(2010,12,1),
                 "Yota",
                 "Ведущий специалист",
                 "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J," +
                 " EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики" +
                 " и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
 
-        Skill skillExperience6 = new Skill(
-                "03/2007 - 06/2008",
+        Experience experienceJob6 = new Experience(
+                LocalDate.of(2007,3,1),
+                LocalDate.of(208,6,1),
                 "Enkata",
                 "Разработчик ПО",
                 "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей" +
                 " кластерного J2EE приложения (OLAP, Data mining).");
 
-        Skill skillExperience7 = new Skill(
-                "01/2005 - 02/2007",
+        Experience experienceJob7 = new Experience(
+                LocalDate.of(2005,1,1),
+                LocalDate.of(207,2,1),
                 "Siemens AG",
                 "Разработчик ПО",
                 "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной" +
                 " IN платформе Siemens @vantage (Java, Unix).");
 
-        Skill skillExperience8 = new Skill(
-                "09/1997 - 01/2005",
+        Experience experienceJob8 = new Experience(
+                LocalDate.of(1997,9,1),
+                LocalDate.of(2005,1,1),
                 "Alcatel",
                 "Инженер по аппаратному и программному тестированию",
                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
 
-        Skill skillEducation1 = new Skill(
-                "03/2013 - 05/2013",
+        Experience experienceEducation1 = new Experience(
+                LocalDate.of(2013,3,1),
+                LocalDate.of(2013,5,1),
                 "Coursera",
                 "'Functional Programming Principles in Scala' by Martin Odersky");
 
-        Skill skillEducation2 = new Skill(
-                "03/2011 - 04/2011",
+        Experience experienceEducation2 = new Experience(
+                LocalDate.of(2011,3,1),
+                LocalDate.of(2011,4,1),
                 "Luxoft",
                 "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'");
 
-        Skill skillEducation3 = new Skill(
-                "01/2005 - 04/2005",
+        Experience experienceEducation3 = new Experience(
+                LocalDate.of(2005,1,1),
+                LocalDate.of(2005,4,1),
                 "Siemens AG",
                 "3 месяца обучения мобильным IN сетям (Берлин)");
 
-        Skill skillEducation4 = new Skill(
-                "09/1997 - 03/1998",
+        Experience experienceEducation4 = new Experience(
+                LocalDate.of(1997,9,1),
+                LocalDate.of(1998,3,1),
                 "Alcatel",
                 "6 месяцев обучения цифровым телефонным сетям (Москва)");
 
-        Skill skillEducation5 = new Skill(
-                "09/1993 - 07/1996",
+        Experience experienceEducation5 = new Experience(
+                LocalDate.of(1993,9,1),
+                LocalDate.of(1996,7,1),
                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "Аспирантура (программист С, С++)");
 
-        Skill skillEducation6 = new Skill(
-                "09/1987 - 07/1993",
+        Experience experienceEducation6 = new Experience(
+                LocalDate.of(1987,9,1),
+                LocalDate.of(1993,7,1),
                 "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "Инженер (программист Fortran, C)");
 
-        Skill skillEducation7 = new Skill(
-                "09/1984 - 06/1987",
+        Experience experienceEducation7 = new Experience(
+                LocalDate.of(1984,9,1),
+                LocalDate.of(1987,6,1),
                 "Заочная физико-техническая школа при МФТИ",
                 "Закончил с отличием");
 
-        HashMap<String, Skill> skillsExperience = new HashMap<>();
-        skillsExperience.put(skillExperience1.getDate(), skillExperience1);
-        skillsExperience.put(skillExperience2.getDate(), skillExperience2);
-        skillsExperience.put(skillExperience3.getDate(), skillExperience3);
-        skillsExperience.put(skillExperience4.getDate(), skillExperience4);
-        skillsExperience.put(skillExperience5.getDate(), skillExperience5);
-        skillsExperience.put(skillExperience6.getDate(), skillExperience6);
-        skillsExperience.put(skillExperience7.getDate(), skillExperience7);
-        skillsExperience.put(skillExperience8.getDate(), skillExperience8);
+        List<Experience> experienceJob = new ArrayList<>();
+        experienceJob.add(experienceJob1);
+        experienceJob.add(experienceJob2);
+        experienceJob.add(experienceJob3);
+        experienceJob.add(experienceJob4);
+        experienceJob.add(experienceJob5);
+        experienceJob.add(experienceJob6);
+        experienceJob.add(experienceJob7);
+        experienceJob.add(experienceJob8);
 
-        HashMap<String, Skill> skillsEducation = new HashMap<>();
-        skillsEducation.put(skillEducation1.getDate(), skillEducation1);
-        skillsEducation.put(skillEducation2.getDate(), skillEducation2);
-        skillsEducation.put(skillEducation3.getDate(), skillEducation3);
-        skillsEducation.put(skillEducation4.getDate(), skillEducation4);
-        skillsEducation.put(skillEducation5.getDate(), skillEducation5);
-        skillsEducation.put(skillEducation6.getDate(), skillEducation6);
-        skillsEducation.put(skillEducation7.getDate(), skillEducation7);
+        List<Experience> experienceEducation = new ArrayList<>();
+        experienceEducation.add(experienceEducation1);
+        experienceEducation.add(experienceEducation2);
+        experienceEducation.add(experienceEducation3);
+        experienceEducation.add(experienceEducation4);
+        experienceEducation.add(experienceEducation5);
+        experienceEducation.add(experienceEducation6);
+        experienceEducation.add(experienceEducation7);
 
         resume.setSection(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(achievements)));
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(qualifications)));
-        resume.setSection(SectionType.EXPERIENCE, new SkillSection(skillsExperience));
-        resume.setSection(SectionType.EDUCATION, new SkillSection(skillsEducation));
+        resume.setSection(SectionType.EXPERIENCE, new Organization(experienceJob));
+        resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));
 
         System.out.println(resume.getFullName());
 
