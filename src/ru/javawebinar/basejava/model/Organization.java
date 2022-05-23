@@ -11,6 +11,6 @@ public class Organization extends AbstractSection {
 
     @Override
     public String toString() {
-        return experience.toString();
+        return experience.toString().replaceAll("[\\[|\\]|,]", "");
     }
 }

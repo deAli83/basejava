@@ -224,11 +224,11 @@ public class ResumeTestData {
         System.out.println(resume.getFullName());
 
         for (ContactType type: ContactType.values()) {
-            System.out.println(type.getTitle() + " :" + resume.getContact(type));
+            System.out.println(type.getTitle() + ": " + resume.getContact(type));
         }
 
         for (SectionType type: SectionType.values()) {
-            System.out.println(type.getTitle() + " :" + resume.getSection(type));
+            System.out.println(type.getTitle() + ": " + resume.getSection(type));
         }
     }
 }

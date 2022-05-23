@@ -46,9 +46,13 @@ public class Experience {
 
     @Override
     public String toString() {
-        return "Дата: " + startDate + " - " + finishDate + "\n" +
-                "Наименование: " + name + "\n" +
-                "Позиция: " + position + "\n" +
-                "Описание: '" + description;
+        if (position != null) {
+            position = "Позиция: " + position + "\n";
+        } else {
+            position = "";
+        }
+        return ("Дата: " + startDate + " - " + finishDate + "\n" +
+                "Наименование: " + name + "\n" + position +
+                "Описание: '" + description + "\n");
     }
 }
