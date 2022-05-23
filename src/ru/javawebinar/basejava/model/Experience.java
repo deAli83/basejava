@@ -51,8 +51,8 @@ public class Experience {
         } else {
             position = "";
         }
-        return ("Дата: " + startDate + " - " + finishDate + "\n" +
+        return ("\n" + "Дата: " + startDate + " - " + finishDate + "\n" +
                 "Наименование: " + name + "\n" + position +
-                "Описание: '" + description + "\n");
+                "Описание: '" + description);
     }
 }
