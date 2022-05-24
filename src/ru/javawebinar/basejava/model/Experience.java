@@ -1,58 +1,18 @@
 package ru.javawebinar.basejava.model;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class Experience {
-    private LocalDate startDate;
-    private LocalDate finishDate;
     private String name;
-    private String position;
-    private String description;
+    private List<Period> periods;
 
-    public Experience(LocalDate startDate, LocalDate finishDate, String name, String description) {
-        this.startDate = startDate;
-        this.finishDate = finishDate;
+    public Experience(String name, List<Period> periods) {
         this.name = name;
-        this.description = description;
-    }
-
-    public Experience(LocalDate startDate, LocalDate finishDate, String name, String position, String description) {
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-        this.name = name;
-        this.position = position;
-        this.description = description;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getFinishDate() {
-        return startDate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public String getDescription() {
-        return description;
+        this.periods = periods;
     }
 
     @Override
     public String toString() {
-        if (position != null) {
-            position = "Позиция: " + position + "\n";
-        } else {
-            position = "";
-        }
-        return ("\n" + "Дата: " + startDate + " - " + finishDate + "\n" +
-                "Наименование: " + name + "\n" + position +
-                "Описание: '" + description);
+        return ("\n\n" + "Наименование: " + name + periods);
     }
 }

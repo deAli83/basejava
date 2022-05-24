@@ -84,26 +84,34 @@ public class ResumeTestData {
                 "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, " +
                 "функционального программирования", "Родной русский, английский \"upper intermediate\""};
 
-        Experience experienceJob1 = new Experience(
+
+        Period period1Job1 = new Period(
                 LocalDate.of(2013,10,1),
                 LocalDate.now(),
-                "Java Online Projects",
                 "Автор проекта.",
                 "Создание, организация и проведение Java онлайн проектов и стажировок.");
 
-        Experience experienceJob2 = new Experience(
+        List<Period> periodsJob1 = new ArrayList<>();
+        periodsJob1.add(period1Job1);
+
+        Experience job1 = new Experience("Java Online Projects", periodsJob1);
+
+        Period period1Job2 = new Period(
                 LocalDate.of(2014,10,1),
                 LocalDate.of(2016,1,1),
-                "Wrike",
                 "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, " +
                 "pring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, " +
                 "авторизация по OAuth1, OAuth2, JWT SSO.");
 
-        Experience experienceJob3 = new Experience(
+        List<Period> periodsJob2 = new ArrayList<>();
+        periodsJob2.add(period1Job2);
+
+        Experience job2 = new Experience("Wrike", periodsJob2);
+
+        Period period1Job3 = new Period(
                 LocalDate.of(2012,4,1),
                 LocalDate.of(2014,10,1),
-                "RIT Center",
                 "Java архитектор",
                 "Организация процесса разработки системы ERP для разных окружений: релизная политика, " +
                 "версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы " +
@@ -113,108 +121,157 @@ public class ResumeTestData {
                 "Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, " +
                 "OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
 
-        Experience experienceJob4 = new Experience(
+        List<Period> periodsJob3 = new ArrayList<>();
+        periodsJob3.add(period1Job3);
+
+        Experience job3 = new Experience("RIT Center", periodsJob3);
+
+        Period period1Job4 = new Period(
                 LocalDate.of(2010,12,1),
                 LocalDate.of(2012,4,1),
-                "Luxoft (Deutsche Bank)",
                 "Ведущий программист",
                 "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper," +
                 " Oracle). Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования," +
                 " мониторинга и анализа результатов в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT," +
                 " ExtGWT (GXT), Highstock, Commet, HTML5.");
 
-        Experience experienceJob5 = new Experience(
+        List<Period> periodsJob4 = new ArrayList<>();
+        periodsJob4.add(period1Job4);
+
+        Experience job4 = new Experience("Luxoft (Deutsche Bank)", periodsJob4);
+
+        Period period1Job5 = new Period(
                 LocalDate.of(2008,6,1),
                 LocalDate.of(2010,12,1),
-                "Yota",
                 "Ведущий специалист",
                 "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J," +
-                " EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики" +
-                " и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
+                        " EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). Реализация администрирования, статистики" +
+                        " и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
 
-        Experience experienceJob6 = new Experience(
+        List<Period> periodsJob5 = new ArrayList<>();
+        periodsJob5.add(period1Job5);
+
+        Experience job5 = new Experience("Yota", periodsJob5);
+
+        Period period1Job6 = new Period(
                 LocalDate.of(2007,3,1),
                 LocalDate.of(208,6,1),
-                "Enkata",
                 "Разработчик ПО",
                 "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей" +
                 " кластерного J2EE приложения (OLAP, Data mining).");
 
-        Experience experienceJob7 = new Experience(
+        List<Period> periodsJob6 = new ArrayList<>();
+        periodsJob6.add(period1Job6);
+
+        Experience job6 = new Experience("Enkata", periodsJob6);
+
+        Period period1Job7 = new Period(
                 LocalDate.of(2005,1,1),
                 LocalDate.of(207,2,1),
-                "Siemens AG",
                 "Разработчик ПО",
                 "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной" +
                 " IN платформе Siemens @vantage (Java, Unix).");
 
-        Experience experienceJob8 = new Experience(
+        List<Period> periodsJob7 = new ArrayList<>();
+        periodsJob7.add(period1Job7);
+
+        Experience job7 = new Experience("Siemens AG", periodsJob7);
+
+        Period period1Job8= new Period(
                 LocalDate.of(1997,9,1),
                 LocalDate.of(2005,1,1),
-                "Alcatel",
                 "Инженер по аппаратному и программному тестированию",
                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
 
-        Experience experienceEducation1 = new Experience(
+        List<Period> periodsJob8 = new ArrayList<>();
+        periodsJob8.add(period1Job8);
+
+        Experience job8 = new Experience("Alcatel", periodsJob8);
+
+        Period period1Education1= new Period(
                 LocalDate.of(2013,3,1),
                 LocalDate.of(2013,5,1),
-                "Coursera",
                 "'Functional Programming Principles in Scala' by Martin Odersky");
 
-        Experience experienceEducation2 = new Experience(
+        List<Period> periodsEducation1 = new ArrayList<>();
+        periodsEducation1.add(period1Education1);
+
+        Experience education1 = new Experience("Coursera", periodsEducation1);
+
+        Period period1Education2= new Period(
                 LocalDate.of(2011,3,1),
                 LocalDate.of(2011,4,1),
-                "Luxoft",
                 "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'");
 
-        Experience experienceEducation3 = new Experience(
+        List<Period> periodsEducation2 = new ArrayList<>();
+        periodsEducation2.add(period1Education2);
+
+        Experience education2 = new Experience("Luxoft", periodsEducation2);
+
+        Period period1Education3= new Period(
                 LocalDate.of(2005,1,1),
                 LocalDate.of(2005,4,1),
-                "Siemens AG",
                 "3 месяца обучения мобильным IN сетям (Берлин)");
 
-        Experience experienceEducation4 = new Experience(
+        List<Period> periodsEducation3 = new ArrayList<>();
+        periodsEducation3.add(period1Education3);
+
+        Experience education3 = new Experience("Siemens AG", periodsEducation3);
+
+        Period period1Education4= new Period(
                 LocalDate.of(1997,9,1),
                 LocalDate.of(1998,3,1),
-                "Alcatel",
                 "6 месяцев обучения цифровым телефонным сетям (Москва)");
 
-        Experience experienceEducation5 = new Experience(
+        List<Period> periodsEducation4 = new ArrayList<>();
+        periodsEducation4.add(period1Education4);
+
+        Experience education4 = new Experience("Alcatel", periodsEducation4);
+
+        Period period1Education5= new Period(
                 LocalDate.of(1993,9,1),
                 LocalDate.of(1996,7,1),
-                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "Аспирантура (программист С, С++)");
 
-        Experience experienceEducation6 = new Experience(
+        Period period2Education5= new Period(
                 LocalDate.of(1987,9,1),
                 LocalDate.of(1993,7,1),
-                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "Инженер (программист Fortran, C)");
 
-        Experience experienceEducation7 = new Experience(
+        List<Period> periodsEducation5 = new ArrayList<>();
+        periodsEducation5.add(period1Education5);
+        periodsEducation5.add(period2Education5);
+
+        Experience education5 = new Experience("Санкт-Петербургский национальный исследовательский университет" +
+                " информационных технологий, механики и оптики", periodsEducation5);
+
+        Period period1Education6= new Period(
                 LocalDate.of(1984,9,1),
                 LocalDate.of(1987,6,1),
-                "Заочная физико-техническая школа при МФТИ",
                 "Закончил с отличием");
 
+        List<Period> periodsEducation6 = new ArrayList<>();
+        periodsEducation6.add(period1Education6);
+
+        Experience education6 = new Experience("Заочная физико-техническая школа при МФТИ", periodsEducation6);
+
         List<Experience> experienceJob = new ArrayList<>();
-        experienceJob.add(experienceJob1);
-        experienceJob.add(experienceJob2);
-        experienceJob.add(experienceJob3);
-        experienceJob.add(experienceJob4);
-        experienceJob.add(experienceJob5);
-        experienceJob.add(experienceJob6);
-        experienceJob.add(experienceJob7);
-        experienceJob.add(experienceJob8);
+        experienceJob.add(job1);
+        experienceJob.add(job2);
+        experienceJob.add(job3);
+        experienceJob.add(job4);
+        experienceJob.add(job5);
+        experienceJob.add(job6);
+        experienceJob.add(job7);
+        experienceJob.add(job8);
 
         List<Experience> experienceEducation = new ArrayList<>();
-        experienceEducation.add(experienceEducation1);
-        experienceEducation.add(experienceEducation2);
-        experienceEducation.add(experienceEducation3);
-        experienceEducation.add(experienceEducation4);
-        experienceEducation.add(experienceEducation5);
-        experienceEducation.add(experienceEducation6);
-        experienceEducation.add(experienceEducation7);
+        experienceEducation.add(education1);
+        experienceEducation.add(education2);
+        experienceEducation.add(education3);
+        experienceEducation.add(education4);
+        experienceEducation.add(education5);
+        experienceEducation.add(education6);
 
         resume.setSection(SectionType.ACHIEVEMENT, new ListSection(Arrays.asList(achievements)));
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(qualifications)));
