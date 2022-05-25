@@ -48,7 +48,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    final protected boolean isExist(Integer searchKey) {
+    protected boolean isExist(Integer searchKey) {
         return (searchKey) < 0;
     }
 }
