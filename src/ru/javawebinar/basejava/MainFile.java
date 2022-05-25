@@ -22,7 +22,7 @@ public class MainFile {
                 System.out.println(name);
             }
         }
-                
+
         /*try (FileInputStream fis = new FileInputStream(filePath)) {
             System.out.println(fis.read());
         } catch (IOException e) {

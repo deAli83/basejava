@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static ru.javawebinar.basejava.ResumeTestData.generate;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -26,9 +27,10 @@ public abstract class AbstractStorageTest {
     @Before
     public void setUp() throws Exception {
         storage.clear();
-        storage.save(new Resume(UUID_1, "name1"));
-        storage.save(new Resume(UUID_2, "name2"));
-        storage.save(new Resume(UUID_3, "name3"));
+        //storage.save(new Resume(UUID_1, "name1"));
+        storage.save(generate(UUID_1, "name1"));
+        storage.save(generate(UUID_2, "name2"));
+        storage.save(generate(UUID_3, "name3"));
     }
 
     @Test
