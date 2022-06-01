@@ -40,15 +40,20 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void removeResume(Integer searchKey) {
-        storage.remove(getResume(searchKey));
+        storage.remove(searchKey.intValue());
     }
 
     protected Integer getSearchKey(String uuid) {
-        return storage.indexOf(new Resume(uuid, "none"));
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
     protected boolean isExist(Integer searchKey) {
-        return (searchKey) < 0;
+        return searchKey < 0;
     }
 }

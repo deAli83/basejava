@@ -32,7 +32,7 @@ public abstract class AbstractStorage<SK> implements Storage {
         removeResume(findExistedSearchKey(uuid));
     }
 
-    final private SK findExistedSearchKey(String uuid) {
+    private SK findExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
             LOG.warning("Resume " + uuid + " not exist");
@@ -41,7 +41,7 @@ public abstract class AbstractStorage<SK> implements Storage {
         return searchKey;
     }
 
-    final private SK findNotExistedSearchKey(String uuid) {
+    private SK findNotExistedSearchKey(String uuid) {
         SK searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
             LOG.warning("Resume " + uuid + " already exist");
