@@ -19,11 +19,13 @@ public abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+    private static final String UUID_4 = "uuid4";
 
-    private static final Resume R1 = generate("uuid1", "name1");
-    private static final Resume R2 = generate("uuid2", "name2");
-    private static final Resume R3 = generate("uuid3", "name3");
-    private static final Resume R4 = generate("uuid4", "name4");
+    private static final Resume R1 = generate(UUID_1, "name1");
+    private static final Resume R2 = generate(UUID_2, "name2");
+    private static final Resume R3 = generate(UUID_3, "name3");
+    private static final Resume R4 = generate(UUID_4, "name4");
+    private static final Resume R1U = generate(UUID_1, "update");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -50,14 +52,13 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        List<Resume> testList = Arrays.asList(R1, R2, R3);
-        assertEquals(testList, storage.getAllSorted());
+        List<Resume> expectedList = Arrays.asList(R1, R2, R3);
+        assertEquals(expectedList, storage.getAllSorted());
     }
 
     @Test
     public void get() {
-        Resume testResume = R1;
-        assertEquals(testResume, storage.get(UUID_1));
+        assertEquals(R1, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -67,21 +68,19 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume testResume = R3;
-        storage.update(testResume);
-        assertSame(testResume, storage.get(UUID_3));
+        storage.update(R1U);
+        assertSame(R1U, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(storage.get("dummy"));
+        storage.update(R4);
     }
 
     @Test
     public void save() {
-        Resume testResume = R4;
-        storage.save(testResume);
-        assertEquals(testResume, storage.get("uuid4"));
+        storage.save(R4);
+        assertEquals(R4, storage.get(UUID_4));
         assertEquals(4, storage.size());
     }
 

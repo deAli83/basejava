@@ -8,6 +8,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ResumeTestData {
+    public static void main(String[] args) {
+        Resume resume = generate("uuid", "fullname");
+
+        System.out.println(resume.getFullName());
+
+        for (ContactType type: ContactType.values()) {
+            System.out.println(type.getTitle() + ": " + resume.getContact(type));
+        }
+        for (SectionType type: SectionType.values()) {
+            System.out.println("\n" + type.getTitle() + ": " + resume.getSection(type));
+        }
+    }
 
     public static Resume generate(String uuid, String fullname) {
         Resume resume = new Resume(uuid, fullname);
@@ -74,11 +86,15 @@ public class ResumeTestData {
         Experience education2 = new Experience("Education Organization" + uuid + " 2", "link", periodsEducation2);
 
         List<Experience> experienceEducation = new ArrayList<>();
-        experienceJob.add(education1);
-        experienceJob.add(education2);
+        experienceEducation.add(education1);
+        experienceEducation.add(education2);
 
         resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));
 
         return resume;
     }
+
+
+
+
 }
