@@ -3,8 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +35,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public Resume getResume(File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -45,7 +44,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void updateResume(Resume r, File file) {
         try {
-            doWrite(r, file);
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -55,7 +54,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public void addResume(Resume r, File file) {
         try {
             file.createNewFile();
-            doWrite(r, file);
+            doWrite(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -72,7 +71,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         List<Resume> resumes = new ArrayList<>();
         for (File file : files) {
             try {
-                resumes.add(doRead(file));
+                resumes.add(doRead(new BufferedInputStream(new FileInputStream(file))));
             } catch (IOException e) {
                 throw new StorageException("IO error", file.getName(), e);
             }
@@ -96,7 +95,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return list.length;
     }
 
-    protected abstract void doWrite(Resume r, File file) throws IOException;
+    protected abstract void doWrite(Resume r, OutputStream file) throws IOException;
 
-    protected abstract Resume doRead(File file) throws IOException;
+    protected abstract Resume doRead(InputStream file) throws IOException;
 }
