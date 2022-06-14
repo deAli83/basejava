@@ -60,6 +60,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
+
+
     @Override
     public void removeResume(File file) {
         file.delete();
