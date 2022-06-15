@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    StreamStrategy strategy;
 
-    protected AbstractPathStorage(String dir) throws IOException {
+    protected PathStorage(String dir, StreamStrategy strategy) throws IOException {
         directory = Paths.get(dir);
+        this.strategy = strategy;
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
@@ -49,7 +51,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     public Resume getResume(Path path) {
         try {
-            return doRead(new BufferedInputStream(Files.newInputStream(path)));
+            return strategy.doRead(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -58,7 +60,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     public void updateResume(Resume r, Path path) {
         try {
-            doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
+            strategy.doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("IO error", path.getFileName().toString(), e);
         }
@@ -68,7 +70,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     public void addResume(Resume r, Path path) {
         try {
             Files.createFile(path);
-            doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
+            strategy.doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Couldn't create file ", path.toString(), e);
         }
@@ -95,8 +97,4 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         }
         return list;
     }
-
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-    protected abstract Resume doRead(InputStream is) throws IOException;
 }
