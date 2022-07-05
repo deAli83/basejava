@@ -1,9 +1,9 @@
 package ru.javawebinar.basejava.storage;
 
-import java.io.IOException;
+import ru.javawebinar.basejava.storage.serializer.ObjectStream;
 
 public class PathStorageTest extends AbstractStorageTest {
-    public PathStorageTest() throws IOException {
+    public PathStorageTest() {
         super(new PathStorage(STORAGE_DIR.getAbsolutePath(), new ObjectStream()));
     }
 }

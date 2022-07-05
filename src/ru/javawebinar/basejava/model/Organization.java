@@ -8,6 +8,8 @@ public class Organization extends AbstractSection {
 
     private List<Experience> experience;
 
+    public Organization() {}
+
     public Organization(List<Experience> experience) {
         this.experience = experience;
     }
