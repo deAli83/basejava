@@ -27,11 +27,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public void clear() {
-        try {
-            streamPath().forEach(this::removeResume);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
-        }
+        streamPath().forEach(this::removeResume);
     }
 
     @Override
@@ -89,17 +85,17 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     public List<Resume> getAll() {
         List<Resume> list = new ArrayList<>();
-        try {
             streamPath().forEach(path -> {
                 list.add(getResume(path));
             });
-        } catch (IOException e) {
-            throw new StorageException(null, "Directory read error");
-        }
         return list;
     }
 
-    private Stream<Path> streamPath() throws IOException {
-        return Files.list(directory);
+    private Stream<Path> streamPath() {
+        try {
+            return Files.list(directory);
+        } catch (IOException e) {
+            throw new StorageException(null, "Directory read error");
+        }
     }
 }
