@@ -25,6 +25,7 @@ public class Period implements Serializable {
     public Period(LocalDate startDate, LocalDate finishDate, String description) {
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.position = "";
         this.description = description;
     }
 

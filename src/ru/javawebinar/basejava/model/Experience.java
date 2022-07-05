@@ -23,6 +23,18 @@ public class Experience implements Serializable {
         this.periods = periods;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
     @Override
     public String toString() {
         return ("\n\n" + "Наименование: " + name + link + periods);

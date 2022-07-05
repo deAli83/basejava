@@ -78,7 +78,6 @@ public class ResumeTestData {
         Period period1Education2 = new Period(
                 LocalDate.of(2000, 9, 1),
                 LocalDate.of(2005, 5, 1),
-                "position" + uuid,
                 "description" + uuid);
 
         List<Period> periodsEducation2 = new ArrayList<>();

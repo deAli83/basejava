@@ -10,8 +10,14 @@ public class Organization extends AbstractSection {
 
     public Organization() {}
 
+    public Organization(String name, String link, List<Period> periods) {}
+
     public Organization(List<Experience> experience) {
         this.experience = experience;
+    }
+
+    public List<Experience> getOrganizations() {
+        return experience;
     }
 
     @Override
