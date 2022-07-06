@@ -41,7 +41,7 @@ public class Period implements Serializable {
     }
 
     public LocalDate getFinishDate() {
-        return startDate;
+        return finishDate;
     }
 
     public String getPosition() {
@@ -54,13 +54,11 @@ public class Period implements Serializable {
 
     @Override
     public String toString() {
-        if (position != null) {
-            position = "Позиция: " + position + "\n";
-        } else {
+        if (position == null) {
             position = "";
         }
         return ("\n" + "Дата: " + startDate + " - " + finishDate + "\n" +
-                position +
+                "Позиция: " + position + "\n" +
                 "Описание: '" + description);
     }
 
@@ -69,7 +67,10 @@ public class Period implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Period period = (Period) o;
-        return Objects.equals(startDate, period.startDate) && Objects.equals(finishDate, period.finishDate) && Objects.equals(position, period.position) && Objects.equals(description, period.description);
+        return Objects.equals(startDate, period.startDate) &&
+                Objects.equals(finishDate, period.finishDate) &&
+                Objects.equals(position, period.position) &&
+                Objects.equals(description, period.description);
     }
 
     @Override

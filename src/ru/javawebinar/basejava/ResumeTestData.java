@@ -42,7 +42,7 @@ public class ResumeTestData {
 
         Period period1Job1 = new Period(
                 LocalDate.of(2013, 10, 1),
-                LocalDate.now(),
+                LocalDate.of(2015, 10, 1),
                 "position" + uuid,
                 "description" + uuid);
 
