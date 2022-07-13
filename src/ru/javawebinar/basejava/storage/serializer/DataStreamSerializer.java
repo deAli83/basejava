@@ -17,13 +17,11 @@ public class DataStreamSerializer implements StreamStrategy {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
             Map<ContactType, String> contacts = r.getContacts();
-            dos.writeInt(contacts.size());
             writeSection(contacts.entrySet(), dos, entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());});
 
             Map<SectionType, AbstractSection> sections = r.getSections();
-            dos.writeInt(sections.size());
             writeSection(sections.entrySet(), dos, entry -> {
                 SectionType key = entry.getKey();
                 dos.writeUTF(key.name());
@@ -34,22 +32,16 @@ public class DataStreamSerializer implements StreamStrategy {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        List<String> items = ((ListSection) r.getSection(key)).getList();
-                        dos.writeInt(items.size());
                         writeSection(((ListSection) r.getSection(key)).getList(), dos, item -> {
                             dos.writeUTF(item);
                         });
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        List<Experience> organizations = ((Organization) r.getSection(key)).getOrganizations();
-                        dos.writeInt(organizations.size());
                         writeSection(((Organization) r.getSection(key)).getOrganizations(), dos, experience -> {
                             dos.writeUTF(experience.getName());
                             String link = experience.getLink();
                             dos.writeUTF(link == null ? "" : link);
-                            List<Period> periods = experience.getPeriods();
-                            dos.writeInt(periods.size());
                             writeSection(experience.getPeriods(), dos, period -> {
                                 dos.writeUTF(period.getStartDate().toString());
                                 dos.writeUTF(period.getFinishDate().toString());
@@ -63,6 +55,7 @@ public class DataStreamSerializer implements StreamStrategy {
     }
 
     private <E> void writeSection (Collection <E> section, DataOutputStream dos, WriteElement<E> writer) throws IOException {
+        dos.writeInt(section.size());
         for (E e : section) {
             writer.write(e);
         }
@@ -90,32 +83,18 @@ public class DataStreamSerializer implements StreamStrategy {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        int listSize = dis.readInt();
-                        List<String> items = new ArrayList<>(listSize);
-                        for (int j = 0; j < listSize; j++) {
-                            items.add(dis.readUTF());
-                        }
-                        resume.setSection(key, new ListSection(items));
+                        resume.setSection(key, new ListSection(readList(dis, dis::readUTF)));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        int organizationSize = dis.readInt();
-                        List<Experience> organizations = new ArrayList<>(organizationSize);
-                        for (int y = 0; y < organizationSize; y++) {
-                            String name = dis.readUTF();
-                            String link = dis.readUTF();
-                            List<Period> periods = new ArrayList<>();
-                            int periodsSize = dis.readInt();
-                            for (int j = 0; j < periodsSize; j++) {
-                                periods.add(new Period(
-                                        LocalDate.parse(dis.readUTF()),
-                                        LocalDate.parse(dis.readUTF()),
-                                        dis.readUTF(),
-                                        dis.readUTF()));
-                            }
-                            organizations.add(new Experience(name, link, periods));
-                        }
-                        resume.setSection(key, new Organization(organizations));
+                        resume.setSection(key, new Organization(readList(dis, () -> new Experience(dis.readUTF(), dis.readUTF(),
+                            readList(dis, () -> new Period(
+                                LocalDate.parse(dis.readUTF()),
+                                LocalDate.parse(dis.readUTF()),
+                                dis.readUTF(),
+                                dis.readUTF())))
+                                ))
+                        );
                 }
             });
             return resume;
@@ -133,4 +112,16 @@ public class DataStreamSerializer implements StreamStrategy {
         void collect(Resume r) throws IOException;
     }
 
+    private <E> List<E> readList (DataInputStream dis, ListCollect<E> listCollector) throws IOException {
+        int size = dis.readInt();
+        List<E> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(listCollector.collect());
+        }
+        return list;
+    }
+
+    private interface ListCollect<E> {
+        E collect() throws IOException;
+    }
 }
