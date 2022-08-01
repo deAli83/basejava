@@ -1,11 +1,8 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import ru.javawebinar.basejava.model.ContactType;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.SectionType;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -23,7 +20,7 @@ public class ResumeTestData {
 
     public static Resume generate(String uuid, String fullname) {
         Resume resume = new Resume(uuid, fullname);
-        resume.setContact(ContactType.PHONE, "phone number" + uuid);
+        /*resume.setContact(ContactType.PHONE, "phone number" + uuid);
         resume.setContact(ContactType.SKYPE, "skype" + uuid);
         resume.setContact(ContactType.EMAIL, "email" + uuid);
         resume.setContact(ContactType.LINKEDIN, "linkedin" + uuid);
@@ -88,7 +85,7 @@ public class ResumeTestData {
         experienceEducation.add(education1);
         experienceEducation.add(education2);
 
-        resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));
+        resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));*/
 
         return resume;
     }

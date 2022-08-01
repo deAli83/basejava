@@ -3,7 +3,6 @@ package ru.javawebinar.basejava.storage;
 import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.Config;
-import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -87,8 +86,8 @@ public abstract class AbstractStorageTest {
         assertEquals(4, storage.size());
     }
 
-    @Test(expected = ExistStorageException.class)
-    public void saveExist() throws Exception {
+    @Test(expected = Exception.class)
+    public void saveExist() {
         storage.save(R1);
     }
 
