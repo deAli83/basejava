@@ -2,7 +2,6 @@ package ru.javawebinar.basejava.sql;
 
 import ru.javawebinar.basejava.exception.StorageException;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,13 +21,12 @@ public class SqlHelper {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             return executor.execute(ps);
-        } catch (SQLException | IOException e) {
-            throw new StorageException(e.getMessage(), e);
+        } catch (SQLException e) {
+            throw StorageException.catchSqlException(e);
         }
     }
 
     public interface Executor<E> {
-        E execute(PreparedStatement ps) throws IOException, SQLException;
+        E execute(PreparedStatement st) throws SQLException;
     }
-
 }
