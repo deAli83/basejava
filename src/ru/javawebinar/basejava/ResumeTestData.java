@@ -20,15 +20,15 @@ public class ResumeTestData {
 
     public static Resume generate(String uuid, String fullname) {
         Resume resume = new Resume(uuid, fullname);
-        /*resume.setContact(ContactType.PHONE, "phone number" + uuid);
-        resume.setContact(ContactType.SKYPE, "skype" + uuid);
-        resume.setContact(ContactType.EMAIL, "email" + uuid);
-        resume.setContact(ContactType.LINKEDIN, "linkedin" + uuid);
-        resume.setContact(ContactType.GITHUB, "github" + uuid);
-        resume.setContact(ContactType.STACKOVERFLOW, "stackoverflow" + uuid);
-        resume.setContact(ContactType.HOMEPAGE, "homepage" + uuid);
+        resume.setContact(ContactType.PHONE, "phone number " + uuid);
+        resume.setContact(ContactType.SKYPE, "skype " + uuid);
+        resume.setContact(ContactType.EMAIL, "email " + fullname);
+        resume.setContact(ContactType.LINKEDIN, "linkedin " + uuid);
+        resume.setContact(ContactType.GITHUB, "github " + uuid);
+        resume.setContact(ContactType.STACKOVERFLOW, "stackoverflow " + uuid);
+        resume.setContact(ContactType.HOMEPAGE, "homepage " + uuid);
 
-        resume.setSection(SectionType.PERSONAL, new TextSection("personal characteristic" + uuid));
+        /*resume.setSection(SectionType.PERSONAL, new TextSection("personal characteristic" + uuid));
         resume.setSection(SectionType.OBJECTIVE, new TextSection("objective" + uuid));
 
         String[] achievements = {"achievement" + uuid + " 1", "achievement" + uuid + " 2"};
