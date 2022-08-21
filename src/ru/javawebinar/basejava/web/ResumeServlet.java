@@ -1,7 +1,8 @@
 package ru.javawebinar.basejava.web;
 
 import ru.javawebinar.basejava.Config;
-import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.model.ContactType;
+import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.Storage;
 
 import javax.servlet.ServletConfig;
@@ -10,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage;
@@ -25,44 +23,47 @@ public class ResumeServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        String uuid = request.getParameter("uuid");
+        String fullName = request.getParameter("fullName");
+        Resume r = storage.get(uuid);
+        r.setFullName(fullName);
+        for (ContactType type : ContactType.values()) {
+            String value = request.getParameter(type.name());
+            if (value != null && value.trim().length() != 0) {
+                r.setContact(type, value);
+            } else {
+                r.getContacts().remove(type);
+            }
+        }
+        storage.update(r);
+        response.sendRedirect("resume");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-
-        PrintWriter writer = response.getWriter();
-        List<Resume> resumeList = storage.getAllSorted();
-
-        writer.println("<html><head></head><body>");
-
-        for (Resume resume : resumeList) {
-
-            writer.println("<h3>Full name: " + resume.getFullName() + "</h3>");
-            writer.println("UUID=" + resume.getUuid() + "<br>");
-            for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
-                writer.println(entry.getKey().name() + ":\t" + entry.getValue() + "<br>");
-            }
-            writer.println("<br>");
-            for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
-                writer.print(entry.getKey().name() + ":\t");
-                writer.print(entry.getKey().name() + ":\t" + "<br>");
-                switch (entry.getKey()) {
-                    case PERSONAL:
-                    case OBJECTIVE:
-                        writer.println(((TextSection) entry.getValue()).getText() + "<br>");
-                        break;
-                    case QUALIFICATIONS:
-                    case ACHIEVEMENT:
-                        ((ListSection) entry.getValue()).getList().forEach(x -> writer.println(x + "<br>"));
-                        break;
-                    default:
-                        throw new IllegalStateException("Wrong resume section!");
-                }
-            }
-
-            writer.println("<br><br>");
+        String uuid = request.getParameter("uuid");
+        String action = request.getParameter("action");
+        if (action == null) {
+            request.setAttribute("resumes", storage.getAllSorted());
+            request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
+            return;
         }
-        writer.println("</body></html>");
+        Resume r;
+        switch (action) {
+            case "delete":
+                storage.delete(uuid);
+                response.sendRedirect("resume");
+                return;
+            case "view":
+            case "edit":
+                r = storage.get(uuid);
+                break;
+            default:
+                throw new IllegalArgumentException("Action " + action + " is illegal");
+        }
+        request.setAttribute("resume", r);
+        request.getRequestDispatcher(
+                ("view".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp")
+        ).forward(request, response);
     }
 }
