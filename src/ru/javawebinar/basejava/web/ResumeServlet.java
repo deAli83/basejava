@@ -47,10 +47,7 @@ public class ResumeServlet extends HttpServlet {
 
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
-            String[] values = request.getParameterValues(type.name());
             if (value != null && value.trim().length() != 0) {
-                r.getSections().remove(type);
-            } else {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
@@ -64,6 +61,8 @@ public class ResumeServlet extends HttpServlet {
                     case EXPERIENCE:
                         break;
                 }
+            } else {
+                r.getSections().remove(type);
             }
         }
 

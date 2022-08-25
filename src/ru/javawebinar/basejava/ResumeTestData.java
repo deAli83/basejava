@@ -1,8 +1,8 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.model.SectionType;
+import ru.javawebinar.basejava.model.*;
+
+import java.util.Arrays;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class ResumeTestData {
         resume.setContact(ContactType.STACKOVERFLOW, "stackoverflow " + uuid);
         resume.setContact(ContactType.HOMEPAGE, "homepage " + uuid);
 
-        /*resume.setSection(SectionType.PERSONAL, new TextSection("personal characteristic" + uuid));
+        resume.setSection(SectionType.PERSONAL, new TextSection("personal characteristic" + uuid));
         resume.setSection(SectionType.OBJECTIVE, new TextSection("objective" + uuid));
 
         String[] achievements = {"achievement" + uuid + " 1", "achievement" + uuid + " 2"};
@@ -37,7 +37,7 @@ public class ResumeTestData {
         String[] qualifications = {"qualification" + uuid + " 1", "qualification" + uuid + " 2"};
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(qualifications)));
 
-        Period period1Job1 = new Period(
+        /*Period period1Job1 = new Period(
                 LocalDate.of(2013, 10, 1),
                 LocalDate.of(2015, 10, 1),
                 "position" + uuid,
