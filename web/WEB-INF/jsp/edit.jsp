@@ -9,6 +9,7 @@
 <%@ page import="ru.javawebinar.basejava.model.SectionType" %>
 <%@ page import="ru.javawebinar.basejava.model.ListSection" %>
 <%@ page import="ru.javawebinar.basejava.model.TextSection" %>
+<%@ page import="ru.javawebinar.basejava.util.Web" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -41,11 +42,11 @@
         <c:choose>
           <c:when test="${type==SectionType.PERSONAL || type==SectionType.OBJECTIVE}">
             <dd><input type="text" name="${type.name()}" size=108
-                       value="<%=((TextSection) resume.getSection(type)).getText()%>">
+                       value="<%=Web.getText(type, resume)%>">
             </dd>
           </c:when>
           <c:when test="${type==SectionType.ACHIEVEMENT || type==SectionType.QUALIFICATIONS}">
-            <dd><textarea name="${type.name()}" cols=100 rows=5><%=String.join("\n", ((ListSection) resume.getSection(type)).getList())%></textarea>
+            <dd><textarea name="${type.name()}" cols=100 rows=5><%=String.join("\n", Web.getList(type, resume))%></textarea>
             </dd>
           </c:when>
         </c:choose>
