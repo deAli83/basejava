@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.web;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.storage.Storage;
+import ru.javawebinar.basejava.util.Web;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -23,18 +24,32 @@ public class ResumeServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
+        Resume r;
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume r;
         boolean resumeExists = uuid != null && uuid.length() > 0;
 
-        if (!resumeExists) {
-            r = new Resume(fullName);
-        } else {
+        if (resumeExists) {
             r = storage.get(uuid);
             r.setFullName(fullName);
+            editResume(request, r);
+        } else {
+            r = new Resume(fullName);
+            editResume(request, r);
         }
+
+        if (!resumeExists && !Web.isEmpty(fullName)) {
+            storage.save(r);
+        } if (!Web.isEmpty(fullName)) {
+            storage.update(r);
+        }
+
+        response.sendRedirect("resume");
+    }
+
+    private void editResume(HttpServletRequest request, Resume r) {
+
 
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
@@ -65,15 +80,8 @@ public class ResumeServlet extends HttpServlet {
                 r.getSections().remove(type);
             }
         }
-
-        if (!resumeExists) {
-            storage.save(r);
-        } else {
-            storage.update(r);
-        }
-
-        response.sendRedirect("resume");
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String uuid = request.getParameter("uuid");
