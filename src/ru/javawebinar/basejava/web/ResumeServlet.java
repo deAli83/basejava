@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.web;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.storage.Storage;
+import ru.javawebinar.basejava.util.Date;
 import ru.javawebinar.basejava.util.Web;
 
 import javax.servlet.ServletConfig;
@@ -11,11 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResumeServlet extends HttpServlet {
     private Storage storage;
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -39,17 +42,15 @@ public class ResumeServlet extends HttpServlet {
             editResume(request, r);
         }
 
-        if (!resumeExists && !Web.isEmpty(fullName)) {
+        if (!resumeExists) {
             storage.save(r);
-        } if (!Web.isEmpty(fullName)) {
+        } else {
             storage.update(r);
         }
 
         response.sendRedirect("resume");
     }
-
     private void editResume(HttpServletRequest request, Resume r) {
-
 
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
@@ -62,6 +63,15 @@ public class ResumeServlet extends HttpServlet {
 
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
+            String[] values = request.getParameterValues(type.name());
+            value = value.replaceAll("\\r","");
+            List<String> notNullValuesList = Arrays.stream(value.split("\n"))
+                    .filter(x -> x.trim().length() > 0)
+                    .collect(Collectors.toList());
+            if (notNullValuesList.size() == 0) {
+                r.getSections().remove(type);
+                continue;
+            }
             if (value != null && value.trim().length() != 0) {
                 switch (type) {
                     case OBJECTIVE:
@@ -70,10 +80,21 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.setSection(type, new ListSection(List.of(value.split("\\n"))));
+                        r.setSection(type, new ListSection(notNullValuesList));
+//                        if (values != null) {
+//                            List<String> list = Arrays.stream(values).map(String::trim).filter(s -> !s.equals("")).collect(Collectors.toList());
+//                            if (!list.isEmpty())
+//                                r.setSection(type, new ListSection(List.of(value.split("\\n"))));
+//                        }
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
+                        if (values != null) {
+                            List<Experience> experienceList = formExperienceList(request, type, values);
+                            if (experienceList != null) {
+                                r.setSection(type, new Organization(experienceList));
+                            }
+                        }
                         break;
                 }
             } else {
@@ -82,7 +103,29 @@ public class ResumeServlet extends HttpServlet {
         }
     }
 
-
+    private List<Experience> formExperienceList(HttpServletRequest request, SectionType type, String[] values) {
+        List<Experience> experienceList = new ArrayList<>();
+        List<Period> periodsList;
+        String[] link = request.getParameterValues(type.name() + "url");
+        for (int i = 0; i < values.length; i++) {
+            String name = values[i];
+            if (!Web.isEmpty(name)) {
+                periodsList = new ArrayList<>();
+                String index = type.name() + i;
+                String[] start = request.getParameterValues(index + "startDate");
+                String[] finish = request.getParameterValues(index + "finishDate");
+                String[] positions = request.getParameterValues(index + "position");
+                String[] descriptions = request.getParameterValues(index + "description");
+                for (int j = 0; j < positions.length; j++) {
+                    if (!Web.isEmpty(positions[j])) {
+                        periodsList.add(new Period(Date.parse(start[j]), Date.parse(finish[j]), positions[j], descriptions[j]));
+                    }
+                }
+                experienceList.add(new Experience(name, link[i], periodsList));
+            }
+        }
+        return experienceList.isEmpty() ? null : experienceList;
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         String uuid = request.getParameter("uuid");
         String action = request.getParameter("action");
@@ -101,8 +144,43 @@ public class ResumeServlet extends HttpServlet {
                 response.sendRedirect("resume");
                 return;
             case "view":
+                r = storage.get(uuid);
+                break;
             case "edit":
                 r = storage.get(uuid);
+                for (SectionType type : SectionType.values()) {
+                    AbstractSection section = r.getSection(type);
+                    switch (type) {
+                        case OBJECTIVE:
+                        case PERSONAL:
+                            if (section == null) {
+                                section = TextSection.EMPTY;
+                            }
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            if (section == null) {
+                                section = ListSection.EMPTY;
+                            }
+                            break;
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            Organization orgSection = (Organization) section;
+                            List<Experience> emptyExperience = new ArrayList<>();
+                            emptyExperience.add(Experience.EMPTY);
+                            if (orgSection != null) {
+                                for (Experience org : orgSection.getOrganizations()) {
+                                    List<Period> emptyPeriod = new ArrayList<>();
+                                    emptyPeriod.add(Period.EMPTY);
+                                    emptyPeriod.addAll(org.getPeriods());
+                                    emptyExperience.add(new Experience(org.getName(), org.getName(), emptyPeriod));
+                                }
+                            }
+                            section = new Organization(emptyExperience);
+                            break;
+                    }
+                    r.setSection(type, section);
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");

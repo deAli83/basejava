@@ -1,9 +1,12 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
+
+    public static final ListSection EMPTY = new ListSection(Collections.singletonList(""));
     private static final long serialVersionUID = 1L;
 
     private List<String> list;

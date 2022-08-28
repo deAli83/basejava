@@ -20,12 +20,12 @@ public class Period implements Serializable {
     private String position;
     private String description;
 
+    public static final Period EMPTY = new Period();
     public Period() {}
-
     public Period(LocalDate startDate, LocalDate finishDate, String description) {
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.position = "";
+        this.position = "student";
         this.description = description;
     }
 

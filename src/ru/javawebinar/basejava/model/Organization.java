@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,9 @@ public class Organization extends AbstractSection {
 
     public Organization() {}
 
+    public Organization(Experience... experiences) {
+        this(Arrays.asList(experiences));
+    }
     public Organization(String name, String link, List<Period> periods) {}
 
     public Organization(List<Experience> experience) {

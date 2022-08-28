@@ -1,5 +1,7 @@
 <%@ page import="ru.javawebinar.basejava.model.ListSection" %>
-<%@ page import="ru.javawebinar.basejava.model.TextSection" %><%--
+<%@ page import="ru.javawebinar.basejava.model.TextSection" %>
+<%@ page import="ru.javawebinar.basejava.model.Organization" %>
+<%@ page import="ru.javawebinar.basejava.util.Web" %><%--
   Created by IntelliJ IDEA.
   User: ALX
   Date: 21.08.2022
@@ -55,6 +57,30 @@
                             </ul>
                         </td>
                     </tr>
+                </c:when>
+                <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
+                    <c:forEach var="org" items="<%=((Organization) section).getOrganizations()%>">
+                        <tr>
+                            <td colspan="2">
+                                <c:choose>
+                                    <c:when test="${empty org.link}">
+                                        <h3>${org.name}</h3>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h3><a href="${org.link}">${org.name}</a></h3>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                        <c:forEach var="period" items="${org.periods}">
+                            <jsp:useBean id="period" type="ru.javawebinar.basejava.model.Period"/>
+                            <tr>
+                                <td style="vertical-align: top"><%=Web.fullDate(period)%>
+                                </td>
+                                <td><b>${period.position}</b><br>${period.description}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:forEach>
                 </c:when>
             </c:choose>
         </c:forEach>

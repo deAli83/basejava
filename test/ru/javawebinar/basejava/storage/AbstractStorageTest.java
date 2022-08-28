@@ -24,11 +24,11 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final Resume R1 = generate(UUID_1, "name1");
-    private static final Resume R2 = generate(UUID_2, "name2");
-    private static final Resume R3 = generate(UUID_3, "name3");
-    private static final Resume R4 = generate(UUID_4, "name4");
-    private static final Resume R1U = generate(UUID_1, "update");
+    private static final Resume R1 = generate(UUID_1, "onename secondname family");
+    private static final Resume R2 = generate(UUID_2, "twoname secondname family");
+    private static final Resume R3 = generate(UUID_3, "threename secondname family");
+    private static final Resume R4 = generate(UUID_4, "fourname secondname family");
+    private static final Resume R1U = generate(UUID_1, "oneonename secondname family");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

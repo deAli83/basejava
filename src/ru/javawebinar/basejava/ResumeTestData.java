@@ -2,7 +2,10 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -37,7 +40,7 @@ public class ResumeTestData {
         String[] qualifications = {"qualification" + uuid + " 1", "qualification" + uuid + " 2"};
         resume.setSection(SectionType.QUALIFICATIONS, new ListSection(Arrays.asList(qualifications)));
 
-        /*Period period1Job1 = new Period(
+        Period period1Job1 = new Period(
                 LocalDate.of(2013, 10, 1),
                 LocalDate.of(2015, 10, 1),
                 "position" + uuid,
@@ -85,7 +88,7 @@ public class ResumeTestData {
         experienceEducation.add(education1);
         experienceEducation.add(education2);
 
-        resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));*/
+        resume.setSection(SectionType.EDUCATION, new Organization(experienceEducation));
 
         return resume;
     }
